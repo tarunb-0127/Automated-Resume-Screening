@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h3>Upload Resume</h3>
+        <form action="{% url 'upload_resume' job_id=job_posting.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Custom Rendering of Resume Field -->
+            <div class="form-group">
+                <label for="id_resume">Resume:</label>
+                {% if form.resume.value %}
+                    <div>
+                        <a href="{{ form.resume.value.url }}" target="_blank">{{ form.resume.value.name|default_if_none:"No file chosen" }}</a>
+                    </div>
+                    <div>
+                        <label for="id_resume">Change:</label> {{ form.resume }}
+                    </div>
+                {% else %}
+                    {{ form.resume }}
+                {% endif %}
+            </div>
+
+            <!-- Custom Rendering of Cover Letter Field -->
+            <div class="form-group">
+                <label for="id_cover_letter">Cover Letter:</label>
+                {% if form.cover_letter.value %}
+                    <div>
+                        <a href="{{ form.cover_letter.value.url }}" target="_blank">{{ form.cover_letter.value.name|default_if_none:"No file chosen" }}</a>
+                    </div>
+                    <div>
+                        <label for="id_cover_letter">Change:</label> {{ form.cover_letter }}
+                    </div>
+                {% else %}
+                    {{ form.cover_letter }}
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

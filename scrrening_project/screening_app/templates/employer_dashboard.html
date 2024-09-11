@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Employer Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="list-group">
+                    <li class="list-group-item active">Dashboard</li>
+                    <li class="list-group-item"><a href="{% url 'add_job_posting' %}">Add Job Posting</a></li>
+                    <li class="list-group-item"><a href="#">Applications</a></li>
+                    <li class="list-group-item">Messages</li>
+                    <li class="list-group-item">Settings</li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <h3>Job Postings</h3>
+                <a href="{% url 'add_job_posting' %}" class="btn btn-primary mb-3">Add New Job</a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Date Posted</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in job_postings %}
+                        <tr>
+                            <td>{{ job.title }}</td>
+                            <td>{{ job.date_posted }}</td>
+                            <td>{{ job.status }}</td>
+                            <td>
+                                <a href="{% url 'edit_job_posting' job.id %}" class="btn btn-sm btn-secondary">Edit</a>
+                                <a href="{% url 'delete_job_posting' job.id %}" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="{% url 'job_applications' job.id %}" class="btn btn-sm btn-info">View Applications</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
